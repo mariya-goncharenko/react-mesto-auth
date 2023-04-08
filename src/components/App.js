@@ -1,14 +1,16 @@
 import React from "react";
 import { useState, useEffect } from "react";
+/*import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";*/
 import "../App.css";
 import Header from "./Header";
 import Footer from "./Footer";
 import Main from "./Main";
-import PopupWithForm from "./PopupWithForm";
+/*import PopupWithForm from "./PopupWithForm";*/
 import EditAvatarPopup from "./EditAvatarPopup";
 import EditProfilePopup from "./EditProfilePopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
+import PopupDeleteCard from "./PopupDeleteCard";
 import { api } from "../utils/Api";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
@@ -16,6 +18,8 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isPopupDeleteCardOpen, setIsPopupDeleteCardOpen] = useState(false);
+  const [cardIdWithDelete, setCardIdWithDelete] = useState(null);
   const [selectedCard, setSelectedCard] = useState(null);
 
   const [currentUser, setCurrentUser] = useState({});
@@ -85,6 +89,11 @@ function App() {
     setSelectedCard(card);
   }
 
+  function handlePopupDeleteCard(card) {
+    setIsPopupDeleteCardOpen(true);
+    setCardIdWithDelete(card);
+  }
+
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     if (!isLiked) {
@@ -112,7 +121,8 @@ function App() {
     api
       .deleteCardMethod(card._id)
       .then(() => {
-        setCards((cards) => cards.filter((c) => c._id !== card._id));
+        setCards(cards.filter((c) => c._id !== card._id));
+        closeAllPopups();
       })
       .catch((err) => console.log(err));
   }
@@ -121,12 +131,15 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setIsPopupDeleteCardOpen(false);
     setSelectedCard(null);
   }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header />
+
         <Main
           cards={cards}
           onEditAvatar={handleEditAvatarClick}
@@ -134,8 +147,9 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
+          onCardDelete={handlePopupDeleteCard}
         />
+
         <Footer />
 
         <EditAvatarPopup
@@ -154,18 +168,12 @@ function App() {
           onAddPlace={handleAddPlaceSubmit}
         />
 
-        <PopupWithForm
-          name="delete"
-          title="Вы уверены?"
+        <PopupDeleteCard
+          cardId={cardIdWithDelete}
           onClose={closeAllPopups}
-        >
-          <button
-            className="popup__button-save popup__button-save_type_close"
-            type="submit"
-          >
-            Да
-          </button>
-        </PopupWithForm>
+          isOpen={isPopupDeleteCardOpen}
+          onCardDelete={handleCardDelete}
+        />
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </div>
