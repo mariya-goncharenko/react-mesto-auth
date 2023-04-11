@@ -1,0 +1,24 @@
+.header__burger {
+  display: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 24px;
+  height: 24px;
+  align-self: center;
+  transition: 0.3s;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.header__burger:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+@media (max-width: 420px) {
+  .header__burger {
+    display: block;
+    margin-left: auto;
+  }
+}

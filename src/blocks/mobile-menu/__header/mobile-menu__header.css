@@ -1,0 +1,9 @@
+.mobile-menu__header {
+
+}
+
+@media (max-width: 420px) {
+    .mobile-menu__header {
+      padding: 0;
+    }
+  }

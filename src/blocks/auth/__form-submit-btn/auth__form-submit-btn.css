@@ -1,0 +1,31 @@
+.auth__form-submit-btn {
+  width: 358px;
+  height: 50px;
+  background: #ffffff;
+  border-radius: 2px;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #000000;
+  margin: 216px 0 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+  cursor: pointer;
+}
+
+.auth__form-submit-btn:hover {
+  opacity: .85;
+  transition: .7s all;
+}
+
+
+@media screen and (max-width: 510px) {
+  .auth__form-submit-btn {
+    width: 260px;
+    height: 46px;
+    font-size: 16px;
+    line-height: 19px;
+    margin: 173px 0 77px auto;
+  }
+}

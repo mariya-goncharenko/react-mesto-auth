@@ -1,33 +1,27 @@
 import React from "react";
 import { useContext } from "react";
 import Card from "./Card";
+import Loader from "./Loader"
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
-function Main({
-  cards,
-  onEditAvatar,
-  onEditProfile,
-  onAddPlace,
-  onCardLike,
-  onCardDelete,
-  onCardClick,
-}) {
+function Main(props) {
   //Для информации о пользователе:
   const currentUser = useContext(CurrentUserContext);
 
-  const cardElements = cards.map((card) => (
+  const cardElements = props.cards.map((card) => (
     <Card
       card={card}
       key={card._id}
-      onCardClick={onCardClick}
-      onCardDelete={onCardDelete}
-      onCardLike={onCardLike}
+      onCardClick={props.onCardClick}
+      onCardDelete={props.onCardDelete}
+      onCardLike={props.onCardLike}
     />
   ));
 
   return (
     <>
       <main>
+        {props.isLoading && <Loader />}
         {/*Информация о пользователе*/}
         <section className="profile">
           <div className="profile__avatar-container">
@@ -35,7 +29,7 @@ function Main({
               className="profile__edit-avatar"
               type="button"
               aria-label="Изменить аватар"
-              onClick={onEditAvatar}
+              onClick={props.onEditAvatar}
             ></button>
             <img
               className="profile__avatar"
@@ -51,7 +45,7 @@ function Main({
               className="profile__edit-profile"
               type="button"
               aria-label="Изменить данные профиля"
-              onClick={onEditProfile}
+              onClick={props.onEditProfile}
             ></button>
           </div>
 
@@ -59,7 +53,7 @@ function Main({
             className="profile__add-button"
             type="button"
             aria-label="Добавить карточку"
-            onClick={onAddPlace}
+            onClick={props.onAddPlace}
           ></button>
         </section>
 
