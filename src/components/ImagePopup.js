@@ -1,6 +1,6 @@
 function ImagePopup({ card, onClose }) {
   return (
-    <div className={`popup popup_type_img ${card ? "popup_opened" : ""}`}>
+    <div className={`popup popup__overlay popup_type_img ${card ? "popup_opened" : ""}`}>
       <figure className="popup__img-container">
         <button
           className="popup__close"
