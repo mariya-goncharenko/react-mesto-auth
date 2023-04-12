@@ -1,0 +1,11 @@
+.auth__signin {
+    height: 112px;
+    width: 100%;
+}
+
+@media screen and (max-width: 510px) {
+    .auth__signin {
+        height: 0;
+        width: 100%;
+    }
+  }

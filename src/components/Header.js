@@ -1,19 +1,12 @@
 import { Switch, Route, Link } from "react-router-dom"
 import logo from "../image/logo.svg";
-import burgerMenu from "../image/burger_menu.svg"
-import closeMenu from "../image/close_mobile_menu.svg"
-import MobileMenu from "./MobileMenu"
+
 
 
 function Header(props) {
   return (
     <div>
-      <MobileMenu
-        email={props.email}
-        handleLogout={props.onSignOut}
-        isMobileMenuOpen={props.isMobileMenuOpen}
-      />
-      <header className="header page__header mobile-menu__header">
+      <header className="header header__container ">
       <img className="header__logo" src={logo} alt="Логотип Место" />
         <Switch>
           <Route exact path="/sign-in">
@@ -39,18 +32,6 @@ function Header(props) {
             </div>
           </Route>
         </Switch>
-        {props.isLoggedIn && (
-          <button
-            className="header__burger"
-            type="button"
-            onClick={props.handleClickOpenMobileMenu}
-            style={{
-              backgroundImage: `url(${
-                props.isMobileMenuOpen ? closeMenu : burgerMenu
-              })`,
-            }}
-          ></button>
-        )}
       </header>
     </div>
   )

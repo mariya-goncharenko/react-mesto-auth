@@ -46,6 +46,7 @@ function Login(props) {
           <button className="auth__form-submit-btn" type="submit">
             Войти
           </button>
+          <div className="auth__signin"></div>
         </form>
       </section>
     </>

@@ -1,7 +1,6 @@
 import React from "react";
 import { useContext } from "react";
 import Card from "./Card";
-import Loader from "./Loader"
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
 function Main(props) {
@@ -21,7 +20,6 @@ function Main(props) {
   return (
     <>
       <main>
-        {props.isLoading && <Loader />}
         {/*Информация о пользователе*/}
         <section className="profile">
           <div className="profile__avatar-container">
