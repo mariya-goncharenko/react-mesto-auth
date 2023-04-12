@@ -46,22 +46,24 @@ function App() {
   const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
-    api
-      .getUserInfo()
-      .then((userData) => {
-        setCurrentUser(userData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    api
-      .getInitialCards()
-      .then((cardData) => {
-        setCards(cardData);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    if (isLoggedIn) {
+      api
+        .getUserInfo()
+        .then((userData) => {
+          setCurrentUser(userData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  
+      api
+        .getInitialCards()
+        .then((cardData) => {
+          setCards(cardData);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
@@ -176,26 +178,13 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    if (!isLiked) {
-      api
-        .addLike(card._id, true)
-        .then((newCard) => {
-          setCards((state) =>
-            state.map((c) => (c._id === newCard._id ? newCard : c))
-          );
-        })
-        .catch((err) => console.log(err));
-    } else {
-      api
-        .deleteLike(card._id)
-        .then((newCard) => {
-          setCards((state) =>
-            state.map((c) => (c._id === newCard._id ? newCard : c))
-          );
-        })
-        .catch((err) => console.log(err));
-    }
+    const isLiked = card.likes.some((i) => i._id === currentUser._id); 
+
+(isLiked ? api.deleteLike(card._id) : api.addLike(card._id, true))
+  .then((newCard) => { 
+    setCards((state) => state.map((c) => (c._id === newCard._id ? newCard : c))); 
+  }) 
+  .catch((err) => console.log(err));
   }
 
   function handleCardDelete(card) {
@@ -276,13 +265,13 @@ function App() {
           onCardDelete={handleCardDelete}
         />
 
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-
         <InfoToolTip
           isOpen={isInfoToolTipPopupOpen}
           onClose={closeAllPopups}
           isSuccess={isSuccess}
         />
+
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </div>
     </CurrentUserContext.Provider>
   );

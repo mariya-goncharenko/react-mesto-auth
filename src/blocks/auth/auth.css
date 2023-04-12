@@ -3,6 +3,7 @@
   padding-top: 60px;
   margin: 0 auto;
   color: #fff;
+  height: 100vh;
 }
 
 @media screen and (max-width: 510px) {
