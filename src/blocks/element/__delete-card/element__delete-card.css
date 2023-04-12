@@ -1,0 +1,15 @@
+.element__delete-card {
+    margin: 0;
+    padding: 0;
+    width: 18px;
+    height: 19px;
+    background-image: url("../../../image/delete.svg");
+    border: none;
+    background-color: transparent;
+    opacity: 0;
+    transition: all 0.5s ease-out;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 3;
+}
